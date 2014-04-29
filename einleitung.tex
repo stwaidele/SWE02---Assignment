@@ -8,14 +8,15 @@ In dierser Artbeit sollten mögliche Angriffstechniken auf Webanwendungen
 sowie geeignete Gegenmaßnahmen dargestellt werden.
 
 Auch wenn eine Internetanwendung wie etwa ein Web--Shop nur einem beschränkten Personenkreis zur Verfügung stehen soll,
-so ist zumindest das Anmeldeformular aufgrund der Struktur des World Wide Web (\ac{WWW}) doch für Angriffe beliebiger Personen erreichbar.
+so ist zumindest das Anmeldeformular\footnote{Zumeist gilt dies für noch mehr Seiten mit Benutzerinteraktion, wie z.B. die Grundfunktionalität des Warenkorbs, Suchfunktione, etc.} aufgrund der Struktur des \ac{WWW} doch für Angriffe beliebiger Personen erreichbar.
 Daher sind schon bei der Implementierung eine Reihe von Sicherheitsaspekten zu beachten, um dieser umfangreichen Bedrohung entgegen zu wirken.
 
 \subsection{Aufbau der Arbeit}
 
-Zunächst werden im Kapitel~\ref{sec:grundlagen} die für diese Arbeit notwendigen ...
+Zunächst werden im Kapitel~\ref{sec:grundlagen} erörtert, warum der Sicherheitsaspekt bei der Erstellung eines Web–Shops ein wichtig ist. Es werden Angriffsziele, Szenarien genannt, sowie die möglichen wirtschaftlichen Konsequenzen eines erfolgreichen Angriffs aufgezeigt. Außerdem wird als ein einfaches HTML--Formular skizziert anhand dessen die unterschiedlichen Angriffsmöglichkeiten gezeigt werden können.
 
-Im Kapitel~\ref{sec:hauptteil} werden dann ...
+Im Kapitel~\ref{sec:hauptteil} wird gezeigt, wie Angriffe mit dem Methoden \ac{XSS}, SQL--Injection sowie Brute Force durchgeführt und abgewehrt werden können.
 
 \subsection{Abgrenzung}
 
+Angriffe im Internet können an vielen Punkten der Datenübertragung statt finden. Diese Arbeit beschäftigt sich hauptsächlich mit den Methoden, auf die schon bei der Softwareentwicklung geachtet werden sollte. Risiken, die in den Verantwortungsbereich des Serverbetreibers oder WLAN--Anbieters (wie z.B. Man in the Middle), oder gar des Kunden (Datendiebstahl bzw. Keylogger auf dem Kunden--PC) liegen, werden hier nicht weiter behandelt, auch wenn sie im Grundlagenteil der Vollständigkeit halber erwähnt werden.
