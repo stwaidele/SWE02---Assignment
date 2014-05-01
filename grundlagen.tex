@@ -3,12 +3,26 @@
 
 \subsection{Schützenswerte Güter}
 
-Vertraulichkeit, Integrität, Verbindlichkeit, Verfügbarkeit
+Bei der Sicherheit eines Webshops bestehen die gleichen Grundbedrohunge wie bei der der Informationssicherheit im allgemeinn. Diese sind 
+Vertraulichkeit, Verläßlichkeit, Verbindlichkeit, Verfügbarkeit.\footnote{Aufzählung und Erklärungen vgl. \cite{bbds}}
+
+\begin{itemize}
+	\item \textbf{Vertraulichkeit:} Die Daten sollen nicht in die Hände von Unbefugten geraten bzw. unberechtigt gelesen werden.
+	\item \textbf{Verläßlichkeit} (Integrität): Die Daten sollen nicht verändert werden.
+	\item \textbf{Verbindlichkeit} (Authentizität): Die Herkunft der Daten bzw. die Identität des Urheber ist zweifelsfrei zu ermitteln.
+	\item \textbf{Verfügbarkeit:} Die Daten bzw. Programmfunktionen sind jederzeit (bzw. immer wenn benötigt) verfügbar. 
+\end{itemize}
+
 
 \subsection{Angriffsziele}
 
-Webshop, unsere Daten, die Daten unserer Kunden
+Ein Webshop bildet den Verkaufsprozess zwischen Händler und Kunde ab. Auch wenn die Angriffe an diesem Bindeglied stattfinden, können sich 
+die oben genannten Grundbedrohungen auf unterschiedliche Ziele richten:
 
-\subsection{Angriffsarten}
+\begin{itemize}
+	\item \textbf{Der Webshop selbst:} Hier wird direkt auf die Verfügbarkeit bzw. Zuverlässigkeit der Shopsoftware gezielt
+	\item \textbf{Die Unternehmensdaten:} Auch wenn bei oberflächlicher Betrachtung ein Webshop nur Produktdaten und Preislisten enthält, so sind hier durch die Kaufabwicklung weitere, durchaus sensible Daten wie z.B. Verkaufsstatistiken oder Rabattstaffeln gespeichert. Wird keine Stand--Alone Shoplösung sondern eine in das \ac{SCM} bzw. \ac{ERP} integrierte Lösung verwendet, so können erfolgreiche Angreifer noch weitere Daten des Unternehmens erlangen.  
+	\item \textbf{Die Kundendaten:} Kundenadressen und vergangene Bestellungen können für gezieltes und effektives Direktmarketing genutzt werden. Kreditkarten-- oder Kontodaten, Benutzernamen und Passwörter bieten ebenfalls eine Grundlage für weitergehende Angriffe auf die Benutzerkonten des Kunden bei anderen Anbietern und Diensten, bis hin zum Identitätsdiebstahl.\footnote{vgl. \cite{vodafone}}
+\end{itemize}
 
-\ac{DOS} bzw. \ac{DDOS}, Man in the Middle, Cross Site Scripting \acs{XSS}\footnote{X für „Cross“, um Verwechslungen mit \ac{CSS} zu vermeiden.}, SQL--Injection \ac{SQL}, Brute Force
+

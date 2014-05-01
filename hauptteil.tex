@@ -1,17 +1,25 @@
-\section{Hauptteil}
+\section{Angriffsarten und Gegenmaßnahmen}
 \label{sec:hauptteil}
 
-\subsection{Bewertung der Kostenarten}
+Je nach Angriffsziel und Absicht des Angreifers kommen unterschiedlichen Angriffsmethoden zum Einsatz. Das \ac{OWASP} erstellt regelmäßig eine Liste der der wichtigsten Angriffsarten auf Internetapplikationen. Die in dieser Arbeit untersuchten Risiken Injection (Am Beispiel \ac{SQL}) und \acs{XSS}\footnote{X für „Cross“, um Verwechslungen mit \ac{CSS} zu vermeiden.} belegen auf dieser Liste für 2013 die Plätze eins und drei\footnote{vgl. \cite{owasp}}. Die beiden weiteren hier besprochenen Angriffsmethoden \ac{DoS} bzw. \ac{DDoS}, Man in the Middle und Brute Force können als zumindest als Teilsspekte der ebenfalls in der Liste vorkommenden Punkte „Broken Authentication and Session Management“ (Platz 2) und „Security Misconfiguration“ (Platz 5) betrachtet werden.
 
-\subsubsection{Variable Kosten}
-\subsubsection{Fixkosten}
+\subsection{Denial of Service}
 
-\subsection{Bewertung der Zuschlagskalkulation}
+Unter einem \ac{DoS} versteht man einen Angriff auf die Verfügbarkeit eines Angebots. Im Kontext dieser Arbeit verfolgt der Angreifer somit das Ziel, den Webshop für die Kunden unbenutzbar zu machen. Dies kann aufgrund der öffentlichen Erreichbarkeit mit legitim erscheinenden Anfragen an den Webserver geschehen. Aufgrund der Leistungsfähigkeit moderner Webserver ist dies aber i.d.R. nicht mit einzelnen Rechnern zu leisten. Daher werden meist große Netzwerke von Rechnern\footnote{Die Besitzer dieser Rechner wissen i.d.R. nichts von diesen Angriffen, da die Schadsoftware unbemerkt über Computerviren eingeschleust wurde.} für einen gemeinsamen, dann \ac{DDoS} gennanten Angriff verwendet.\footnote{vgl. \cite{carr}, Kapitel 5}
 
-\subsection{Vorstellung der Kostenstruktur im betrachteten Unternehmen}
-\subsubsection{Ausgangslage}
-\subsubsection{Entwicklung im Verlauf der Simulation}
+Oft sind \ac{DoS}--Angriffe nicht zweifelsfrei nachweisen, da Server auch durch eine entsprechende Menge von legitimen Zugriffen\footnote{z.B. durch Berichterstattung in populären Medien bzw. auf reichweitenstarken Webseiten („Slashdot--Effekt“)} überlastet werden können. Mögliche Gegenmaßnahmen sind die Nutzung einer skalierbaren Infrastruktur, die allgeimein effektive Implementierung der Shopsoftware sowie eine entsprechende Konfiguration der Serversoftware (z.B. Caching). 
 
-\subsection{Bewertung der Kostenstruktur}
-\subsubsection{Erklärung der Entwicklung}
-\subsubsection{Bewertung}
+Da \ac{DoS}--Angriffe nicht nur per \ac{HTTP} auf die Shopsoftware selbst sondern auch auf Firewalls oder Router zielen können\footnote{vgl. \cite{amoroso}, S. 60ff} sind die Abwehrmöglichkeiten für den Entwickler der Shopsoftware sehr beschränkt.
+
+\subsection{Man in the Middle}
+
+Beim Man in the Middle Angriff versucht der Angreifer sich unbemerkt als Mittelsmann in die Kommunikation zwischen Kunde und Webshop einzuklinken. Obwohl der Kunde denkt, direkt mit der Anwendung zu kommunizieren, kann jeglicher Datenfluss vom Angreifer mitgelesen, protokolliert und in schlimsten Fall manipuliert werden. Der Angreifer benötigt daher Zugriff auf die Infrastruktur. Dieser kann im tatsächlichen Zwischenschalten von Abhörhardware\footnote{vgl. \cite{stoll}, S. 28} oder im virtuellen Zwischenschalten auf den unteren Protokollebenen der Netzwerkkommunikation erfolgen.\footnote{vgl. \cite{pritchett}, Kapitel 7.8}
+
+Da der Applikationsentwickler keinen Einfluss auf die Infrastruktur des Internets hat, bleibt hier als Gegenmaßnahme lediglich die Wahl von verschlüsselten Kommunikaitonswegen, z.B. per \ac{HTTPS}.
+
+\subsection{Brute Force}
+
+\subsection{SQL--Injection}
+
+\subsection{Cross Site Scripting}
+
