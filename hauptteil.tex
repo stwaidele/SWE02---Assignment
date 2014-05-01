@@ -4,12 +4,15 @@
 Je nach Angriffsziel und Absicht des Angreifers kommen unterschiedlichen Angriffsmethoden zum Einsatz. Das \ac{OWASP} erstellt regelmäßig eine Liste der der wichtigsten Angriffsarten auf Internetapplikationen. Die in dieser Arbeit untersuchten Risiken Injection (Am Beispiel \ac{SQL}) und \acs{XSS}\footnote{X für „Cross“, um Verwechslungen mit \ac{CSS} zu vermeiden.} belegen auf dieser Liste für 2013 die Plätze eins und drei\footnote{vgl. \cite{owasp}}. Die beiden weiteren hier besprochenen Angriffsmethoden \ac{DoS} bzw. \ac{DDoS}, Man in the Middle und Brute Force können als zumindest als Teilsspekte der ebenfalls in der Liste vorkommenden Punkte „Broken Authentication and Session Management“ (Platz 2) und „Security Misconfiguration“ (Platz 5) betrachtet werden.
 
 \subsection{Denial of Service}
+\label{sec:dos}
 
 Unter einem \ac{DoS} versteht man einen Angriff auf die Verfügbarkeit eines Angebots. Im Kontext dieser Arbeit verfolgt der Angreifer somit das Ziel, den Webshop für die Kunden unbenutzbar zu machen. Dies kann aufgrund der öffentlichen Erreichbarkeit mit legitim erscheinenden Anfragen an den Webserver geschehen. Aufgrund der Leistungsfähigkeit moderner Webserver ist dies aber i.d.R. nicht mit einzelnen Rechnern zu leisten. Daher werden meist große Netzwerke von Rechnern\footnote{Die Besitzer dieser Rechner wissen i.d.R. nichts von diesen Angriffen, da die Schadsoftware unbemerkt über Computerviren eingeschleust wurde.} für einen gemeinsamen, dann \ac{DDoS} gennanten Angriff verwendet.\footnote{vgl. \cite{carr}, Kapitel 5}
 
 Oft sind \ac{DoS}--Angriffe nicht zweifelsfrei nachweisen, da Server auch durch eine entsprechende Menge von legitimen Zugriffen\footnote{z.B. durch Berichterstattung in populären Medien bzw. auf reichweitenstarken Webseiten („Slashdot--Effekt“)} überlastet werden können. Mögliche Gegenmaßnahmen sind die Nutzung einer skalierbaren Infrastruktur, die allgeimein effektive Implementierung der Shopsoftware sowie eine entsprechende Konfiguration der Serversoftware (z.B. Caching). 
 
 Da \ac{DoS}--Angriffe nicht nur per \ac{HTTP} auf die Shopsoftware selbst sondern auch auf Firewalls oder Router zielen können\footnote{vgl. \cite{amoroso}, S. 60ff} sind die Abwehrmöglichkeiten für den Entwickler der Shopsoftware sehr beschränkt.
+
+Außerdem besteht ein Zusammenhang zwischen Brute Force Angriffen, den Abwehrmaßnahmen auf ebendiese sowie eventueller Nichtverfügbarkeit des Dienstes. Näheres dazu im Abschnit~\ref{sec:bruteforce}~\nameref{sec:bruteforce}. 
 
 \subsection{Man in the Middle}
 
@@ -18,6 +21,27 @@ Beim Man in the Middle Angriff versucht der Angreifer sich unbemerkt als Mittels
 Da der Applikationsentwickler keinen Einfluss auf die Infrastruktur des Internets hat, bleibt hier als Gegenmaßnahme lediglich die Wahl von verschlüsselten Kommunikaitonswegen, z.B. per \ac{HTTPS}.
 
 \subsection{Brute Force}
+\label{sec:bruteforce}
+
+Bei einem Brute Force Angriff setzt der Angreifer nicht wie es der Name vermuten lässt auf rohe Gewalt, sondern benötigt Geduld und Ausdauer. Durch Ausprobieren aller möglichen Kombinationen von Benutzername und Passwort versucht der Angreifer Zugriff auf die geschützten Bereiche des Webshops zu erlangen. Es werden oft Listen mit beliebten Passwortern verwendet, um die Effizienz des Angriffs zu optimieren.
+
+Hierbei ist beachtenswert, dass durch die wiederholten Anmeldeversuche der Server überlastet werden kann. Somit kann ein nicht erfolgreicher Brute Force Angriff durchaus zu einem unbeabsichtigten, aber erfolgreichen \ac{DoS}--Angriff entwickeln.\footnote{vgl. \cite{defat}}
+
+Als Gegenmaßnahmen kann die Anzahl der Anmeldeversuche pro Benutzer oder von einer IP--Adresse aus beschränkt werden. Da der Angreifer jedoch meist nicht nur einen, sondern mehrere Nutzernamen durchprobiert, kann hier recht schnell für mehrere Nutzer der Zugriff gesperrt werden. Die regulären Kunden können dann den Webshop nicht erreichen. Die Auswirkungen entsprechen wieder \ac{DoS}.
+
+Der Angreifer kann durch starke Passworte aufgehalten werden. Somit sollte beim Anwendungsentwurf darauf geachtet werden, dass lange Passworte möglich sind, die sowohl Buchstaben und Zahlen als auch Sonderzeichen enthalten können. Je ungewöhnlicher ein Passwort ist, desto wahrscheinlicher ist es, dass es nicht in den Passwortlisten der Angreifer auftaucht, was einen Angriff langsamer, teurer und somit unattraktiver macht. Allerdings sind starke Passworte nicht benutzerfreundlich. Kryptographisch ausreichende Passworte benötigen 20 bis 32 Zeichen und sind somit im Alltag nicht gebräuchlich.\footnote{vgl. \cite{kaufman}, Kapitel 10.4}
+
+Somit ist eine Erweiterung des Passwortbegriffs notwendig, um Brute Force Attacken wirksam bekämpfen zu können. Die Benutzerauthentifikation kann auf zwei oder mehr Stufen erweitert werden. Hierzu wird bei der Benutzeranmeldung nicht nur das abgefragt, was der Nutzer \textit{weiß} (also ein Passwort oder eine Passphrase), sondern auch etwas, was er \textit{besitzt}, was er\textit{ist}\footnote{vgl. \cite{kaufman}, Kapitel 10} oder was er \textit{kann}.
+
+\begin{itemize}
+	
+\item \textbf{Können:} Eine Abwehrmethode sind \acs{CAPTCHA}s\footnote{\ac{CAPTCHA}}, also für Menschen einfache Aufgaben, die für Computerprogramme sehr schwer zu lösen sind.\footnote{Diese können aus umgangssprachlich Formulierten Rechenaufgaben auf Erstklässlerniveau oder aus dem Erkennen einer Zeichenfolge in einer Grafik mit Hintergrundrauschen bestehen.} \ac{CAPTCHA}s sind schon weit verbreitet, sind aber oft nicht benutzerfreundlich.
+\item \textbf{Besitzen:} Schlüssel, Magnetkarten oder Transponder können zur Benutzeranmeldung eingesetzt werden. Desweiteren besteht die Möglichkeit, dass ein Codegenerator\footnote{z.B. Google--Authenticator als Smartphone--App oder spezielle Hardwaregeneratoren} einen Code erzeugt, der nur eine bestimmte, kurze Zeit gültig ist. Somit sind ausgespäte Codes für einen Angreifer wertlos. Nur der Besitzer des Generators kann diese Zeitnah erzeugen und sich damit authentifizieren. 
+\item \textbf{Sein:} Über biometrische Merkmale wird die Identität des Benutzers festgestellt.
+
+\end{itemize}
+
+Auch wenn jede dieser Methoden Nachteile hat und für sich alleine genommen nicht zum Aufbau eines Authentifizierungssystems ausreicht, so können diese Methoden zu einer sogenannten Anmeldung in zwei oder mehr Schritten kombiniert werden, und somit eine wirkungsvolle Maßnahme gegen Brute Force Attacken sowie einer Reihe anderer Risiken rund um Passworte darstellen.
 
 \subsection{SQL--Injection}
 
