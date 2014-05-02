@@ -45,5 +45,46 @@ Auch wenn jede dieser Methoden Nachteile hat und für sich alleine genommen nich
 
 \subsection{SQL--Injection}
 
+Die Daten moderner Internet--Applikationen werden meist in Datenbanken gespeichert, auf die mithilfe von \ac{SQL} zugegriffen wird. Die Parameter für die Datenbankbefehle werden oft vom Nutzer in HTML--Formularen eingegeben. Hier ergibt sich eine Möglichkeit, Schadcode in die Generierte SQL--Anweisung einzubringen.
+
+Eine einfach gehaltene Nutzerverwaltung könnte Nutzername (z.B. „john“) und Passwort (z.B. „geheim“) einlesen. Der vom Formular aufgerufene PHP--Code (siehe Abbildung~\ref{abb:dysql}) erzeugt daraus die in Abbildung~\ref{abb:expsql} gezeigte SQL--Abfrage.
+
+\begin{figure}[h]
+\begin{minted}[bgcolor=bg]{php}
+$query = "SELECT id FROM Users ".
+         "WHERE user = '$_GET["user"]' ".
+         "AND password = '$_GET["password"]'".
+\end{minted}
+\caption{Quellcode: Dynamische Erzeugung einer SQL--Abfrage}
+\label{abb:dysql}
+\end{figure}
+
+\begin{figure}[h]
+\begin{minted}[bgcolor=bg]{sql}
+SELECT id FROM Users WHERE user = 'john' 
+   AND password = 'geheim';
+\end{minted}
+\caption{SQL: Erwartete Abfrage}
+\label{abb:expsql}
+\end{figure}
+
+Problematisch wird es, wenn ein Angreifer diese durchaus übliche Funktionsweise errät. Dann kann er über gezielt manipulierte Eingabedaten die SQL--Abfrage so manipulieren, dass er auch ohne korrekte Anmeldedaten Zugriff erlangen kann. Hierzu muss nur als Passwort die Zeichenkette \code{keines'OR '1'='1} eingegeben werden. Nun entsteht die in Abbildung~\ref{abb:injsql} gezeigte Abfrage, welche aufgrund der immer wahren Bedingung \code{'1'='1'} eine Liste mit allen Benutzer--IDs zurückgibt. Der folgende PHP--Code schließt daraus, dass die Anmeldung rechtens ist, und gewährt dem Angreifer Zugriff.\footnote{vgl. \cite{clarke}, Kapitel 1.3}
+
+\begin{figure}[h]
+\begin{minted}[bgcolor=bg]{sql}
+SELECT id FROM Users WHERE user = 'john' 
+   AND password = 'keines' OR '1'='1';
+\end{minted}
+\caption{SQL: Manipulierte Abfrage}
+\label{abb:injsql}
+\end{figure}
+
+Je nach genutztem Datenbanksystem sind nach diesem Schema eine Vielzahl von Angriffen auf die Daten selbst, oder auch auf die Betriebssystemebene des Datenbankservers möglich.
+
+Um eine Web--Applikation gegen SQL--Injection Angriffe zu sichern, dürfen keine Eingaben aus Formularfeldern ungeprüft in SQL--Anweisungen übernommen werden. Sämtliche Zeichen, die im SQL--Syntax eine Bedeutung haben müssen herausgefiltert oder so kodiert werden, dass diese Bedeutung nicht mehr vorhanden ist\footnote{Zumeist durch voranstellen eines Backslashes „\textbackslash“. Dieser Vorgang wird „Escaping“ genannt.} Hierbei ist jedoch zu beachten, dass wirklich alle relevanten Zeichen berücksichtigt werden und dass das Escaping wirklich jedes mal für alle Daten durchgeführt wird.\footnote{z.B. durch den Aufruf der PHP--Funktionen magic\_quotes(), add\_slashes() oder mysql\_real\_escape\_string()}
+Um hier Fehler zu vermeiden, empfielt sich der Einsatz entsprechender Module für den Zugriff auf SQL--Datenbanken, die selbst und automatisch für das Escaping sorgen. Als Beispiel seien hier die \ac{PDO} genannt.
+
+Einen Schritt weiter geht die Methode, dem SQL--Server zunächst die SQL--Anweisungen mit entsprechenden Platzhaltern für die Parameter zu übergeben. Der SQL--Server bereitet nun die Abfrage vor und optimiert diese. Erst danach werden die eigentlichen Werte der Parameter übergeben und die Abfrage ausgeführt.\footnote{Die Schritte „Parameterübergabe“ und „Ausführung“ können in einer Schleife mehrfach hintereinander mit unterschiedlichen Daten ausgeführt werden. Da die Vorbereitung und Optimierung nur ein mal (vor der Schleife) durchgeführt wird, ergibt sich hier auch ein Geschwindigkeitsvoreil.} Hierduch ist dem Server unabhängig von Zeichen in der Abfrage bekannt, was zu seinen Anweisungen gehört und was die zu verarbeitenden Daten sind. SQL--Injection Angriffe sind auf diese Weise wirkungsvoll zu verhindern.\footnote{vgl. \cite{clarke}, Kapitel 8.3}
+
 \subsection{Cross Site Scripting}
 
