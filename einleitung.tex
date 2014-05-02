@@ -13,10 +13,12 @@ Daher sind schon bei der Implementierung eine Reihe von Sicherheitsaspekten zu b
 
 \subsection{Aufbau der Arbeit}
 
-Zunächst werden im Kapitel~\ref{sec:grundlagen} erörtert, warum der Sicherheitsaspekt bei der Erstellung eines Web–Shops ein wichtig ist. Es werden Angriffsziele, Szenarien genannt, sowie die möglichen wirtschaftlichen Konsequenzen eines erfolgreichen Angriffs aufgezeigt. Außerdem wird als ein einfaches HTML--Formular skizziert anhand dessen die unterschiedlichen Angriffsmöglichkeiten gezeigt werden können.
+Zunächst werden im Kapitel~\ref{sec:grundlagen} erörtert, warum der Sicherheitsaspekt bei der Erstellung eines Web–Shops ein wichtig ist. Es werden Angriffsziele, Szenarien genannt, sowie die möglichen wirtschaftlichen Konsequenzen eines erfolgreichen Angriffs aufgezeigt. 
 
-Im Kapitel~\ref{sec:hauptteil} wird gezeigt, wie Angriffe mit dem Methoden \ac{XSS}, SQL--Injection sowie Brute Force durchgeführt und abgewehrt werden können.
+Im Kapitel~\ref{sec:hauptteil} wird gezeigt, wie Angriffe mit dem Methoden Brute Force, Man in the Middle, SQL--Injection sowie \ac{XSS} durchgeführt und abgewehrt werden können.
 
 \subsection{Abgrenzung}
 
-Angriffe im Internet können an vielen Punkten der Datenübertragung statt finden. Diese Arbeit beschäftigt sich hauptsächlich mit den Methoden, auf die schon bei der Softwareentwicklung geachtet werden sollte. Risiken, die in den Verantwortungsbereich des Serverbetreibers oder WLAN--Anbieters (wie z.B. Man in the Middle), oder gar des Kunden (Datendiebstahl bzw. Keylogger auf dem Kunden--PC) liegen, werden hier nicht weiter behandelt, auch wenn sie im Grundlagenteil der Vollständigkeit halber erwähnt werden.
+Angriffe im Internet können an vielen Punkten der Datenübertragung statt finden. Diese Arbeit beschäftigt sich hauptsächlich mit den Methoden, auf die schon bei der Softwareentwicklung geachtet werden sollte. Risiken, die in den Verantwortungsbereich des Serverbetreibers oder WLAN--Anbieters, oder gar des Kunden (Datendiebstahl bzw. Keylogger auf dem Kunden--PC) liegen, werden hier nicht weiter behandelt, auch wenn sie im Grundlagenteil der Vollständigkeit halber erwähnt werden.
+
+Außerdem wird davon ausgegangen, dass der Webshop den Kaufprozess lediglich bis zur Bestellung abbildet. Weitere Schritte, speziell die Bezahlung, werden auf herkömmlichem Weg abgewickelt.
